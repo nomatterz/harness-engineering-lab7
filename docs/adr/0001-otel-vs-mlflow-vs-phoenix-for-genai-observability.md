@@ -72,7 +72,7 @@ trace-level input and output is a source limit, not a tool difference.
 | | Bare OTel | MLflow | Phoenix |
 |---|-----------|--------|---------|
 | Tokens per call | On spans, including cache (S) | On spans (O) | On spans, including cache-read (O) |
-| Tokens per trace | Not provided | Total in trace metadata: 54.7k in, 2.8k out (O) | Shown per trace (O) |
+| Tokens per trace | Not provided | Total in trace metadata: 54.7k in, 2.8k out (O) | Tokens and cost per trace |
 | Cost | No field; needs a price table (S) | Computed at ingest from a built-in price list; nothing stored, as the list lacks `claude-sonnet-5-5` (O) | Per LLM span in a `span_costs` table; about $0.137 for the session (O) |
 
 Cost in both tools depends on the model being in the tool's price table.
