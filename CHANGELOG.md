@@ -4,7 +4,7 @@
 2. Read production kagent spans in Victoria Traces (`kagent-trace-inspector`) as the bare-OTel evidence: span hierarchy, attributes, token fields, session grouping. Structure only; abox has no OTel trace backend.
 3. Enabled kagent tracing (`otel.tracing` on the kagent HelmRelease) towards the `mlflow/otel-collector` bridge.
 4. Added a catch-all route to the bridge collector that sends traces to MLflow experiment 4 (`kagent`) and to Phoenix (gRPC 4317). Paused Flux on `kagent`, `mlflow/otel-collector` and `phoenix` so these edits stay.
-5. Disabled Phoenix auth (`enableAuth: false`, `disableBasicAuth: true`) so the collector can write.
+5. Disabled Phoenix auth (`enableAuth: false`, `disableBasicAuth: true`) so the collector can write without additional setup.
 6. Created Secret `litellm-personal` and ModelConfig `litellm-claude-sonnet-5` in `kagent`, and set `k8s-agent` to it.
 7. Ran k8s-agent sessions from the kagent UI.
 8. Compared the same session in both tools: 17 spans (3 LLM calls, 9 tool calls, 21.7 s). Same tree, span types, session ID (from the conversation ID) and per-trace token total in both.
