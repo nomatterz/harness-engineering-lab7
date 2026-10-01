@@ -25,9 +25,6 @@ knowledge, not checked.
 
 ## Decision
 
-Phoenix is the observability backend for agentic AI. Agents keep emitting `gen_ai.*` OTLP through
-the OTel collector, so they stay independent of the backend.
-
 - **Phoenix wins.** It is the lightest of the two GenAI tools, takes OTLP directly, and has what
   matters most here: tokens and cost per call, in a tree with typed AGENT, LLM and TOOL spans.
 - **Bare OTel is not enough.** It needs a separate trace backend to be deployed and run (abox has
