@@ -35,7 +35,8 @@ the OTel collector, so they stay independent of the backend.
   tree, so it is noisy to read. It stays as the transport, not the backend.
 - **MLflow is not needed.** Its trace view is comparable to Phoenix, but it is a large platform that
   needs a bridge and clearly more memory. Without the ML lifecycle features (model registry,
-  model packaging and serving) it adds weight and nothing else. Choose it only if those features are wanted.
+  model packaging and serving) it adds weight and nothing else. Choose it only if those features
+  are wanted.
 
 ## Comparison
 
@@ -61,7 +62,7 @@ Same session, opened in each tool.
 | Tool calls | Arguments inside the model completion; tool time only as a gap between spans (S) | Own TOOL spans with duration (O) | Own TOOL spans with duration (O) |
 | Prompt and completion | Raw attributes, read by script (S) | Input and output on LLM spans (O) | Input and output on LLM spans (O) |
 | Trace-level input/output | None (S) | Empty, root is an HTTP span (O) | Empty, same reason (O) |
-| Session grouping | `gen_ai.conversation.id`, no UI (S) | `mlflow.trace.session` set from it automatically (O) | Only if the agent sets `session_id` (B) |
+| Session grouping | `gen_ai.conversation.id`, no UI (S) | `mlflow.trace.session` set from it automatically (O) | Session set from the same conversation ID (O) |
 | Noise | Three wrapper spans per model call (S) | HTTP wrapper spans (O) | HTTP wrapper spans (O) |
 
 The tree and the span types come from kagent's spans; both tools render what is there. The empty
@@ -84,7 +85,7 @@ excluding page cache). No metrics server was available and nothing was measured 
 
 | | Bare OTel | MLflow | Phoenix |
 |---|-----------|--------|---------|
-| Memory, anonymous | Not measured | 1.9 GiB (limit 2 GiB) | 0.47 GiB, plus Postgres 87 MiB total |
+| Memory, anonymous | Not measured | 1.9 GiB (limit 2 GiB) | 0.47 GiB, plus 87 MiB for Postgres (total memory) |
 | Requests / limits | - | 768Mi, 250m / 2Gi, 1 CPU | 1Gi, 500m / 2Gi, 1 CPU; Postgres 256Mi / 512Mi |
 | Restarts | - | 2 on OOM/probe during setup | 0 |
 
@@ -104,9 +105,8 @@ queries run inside the pod.
 
 - One collector feeding one GenAI backend keeps the agents independent of the tool, since they
   only emit `gen_ai.*` OTLP.
-- Phoenix needs less to run and takes OTLP without a bridge; MLflow needs the bridge and about four
-  times the memory for the same input.
-- MLflow groups sessions with no agent change; with Phoenix the agent has to set the session.
+- Phoenix needs less to run and takes OTLP without a bridge; MLflow needs the bridge and used
+  several times the memory for the same input.
 - Keep the price table current in whichever tool is used, or cost will be missing for new models.
 - Trace-level previews stay empty until kagent puts input and output on the root span.
 
@@ -115,6 +115,6 @@ queries run inside the pod.
 - Bare OTel is a production sample, not the same traces, and its resource use was not measured.
 - One agent, a few sessions, one memory reading per tool; not a load test. MLflow's figure includes
   a few restarts and queries run inside the pod.
-- Multi-agent delegation, MLflow custom pricing and Phoenix session behaviour were not checked.
+- Multi-agent delegation and MLflow custom pricing were not checked.
 - The catch-all route also sent Astronomy Shop spans into the same MLflow experiment and Phoenix
   project.

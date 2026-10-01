@@ -7,6 +7,6 @@
 5. Disabled Phoenix auth (`enableAuth: false`, `disableBasicAuth: true`) so the collector can write.
 6. Created Secret `litellm-personal` and ModelConfig `litellm-claude-sonnet-5` in `kagent`, and set `k8s-agent` to it.
 7. Sent k8s-agent sessions from the kagent UI.
-8. Compared the same session in both tools: 17 spans (3 LLM calls, 9 tool calls, 21.7 s), Phoenix trace 216 and MLflow `tr-c00d4927…`. Same tree and span types; MLflow adds a session ID and a per-trace token total.
+8. Compared the same session in both tools: 17 spans (3 LLM calls, 9 tool calls, 21.7 s), Phoenix trace 216 and MLflow `tr-c00d4927…`. Same tree, span types, session ID (from the conversation ID) and per-trace token total in both.
 9. Compared cost: Phoenix prices each LLM span into a `span_costs` table (about $0.137 for the session). MLflow computes `mlflow.llm.cost` at ingest from a built-in price list that lacks `claude-sonnet-5-5`, so no cost was stored.
 10. Wrote ADR 0001.
