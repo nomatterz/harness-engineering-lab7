@@ -34,8 +34,8 @@ the OTel collector, so they stay independent of the backend.
   none). The data is the same, but there are no span types, no token or cost view and no agent
   tree, so it is noisy to read. It stays as the transport, not the backend.
 - **MLflow is not needed.** Its trace view is comparable to Phoenix, but it is a large platform that
-  needs a bridge and clearly more memory. Without the ML lifecycle features (experiments, model
-  registry) it adds weight and nothing else. Choose it only if those features are wanted.
+  needs a bridge and clearly more memory. Without the ML lifecycle features (model registry,
+  model packaging and serving) it adds weight and nothing else. Choose it only if those features are wanted.
 
 ## Comparison
 
@@ -95,9 +95,9 @@ queries run inside the pod.
 
 | | Bare OTel | MLflow | Phoenix |
 |---|-----------|--------|---------|
-| Evals and datasets | None | Yes (B) | Yes (B) |
+| Evals, datasets and experiments | None | Yes (B) | Yes (B) |
 | Prompt management and playground | None | Prompt registry (B) | Versioned prompts and playground (B) |
-| Model registry and experiments | None | Core of the product (B) | No (B) |
+| Model registry and model packaging/serving | None | Core of the product (B) | No (B) |
 | Metrics, logs, service map | Yes (B) | No (B) | No (B) |
 
 ## Consequences
