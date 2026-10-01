@@ -44,8 +44,8 @@ knowledge, not checked.
 | Ingest | OTLP native | OTLP/HTTP only, at `/v1/traces` with an `x-mlflow-experiment-id` header (O) | OTLP gRPC 4317 and HTTP 6006 (O) |
 | Backend to deploy | A separate trace backend must be deployed and run; none in abox | Included | Included |
 | Collector change needed | None | A gRPC-to-HTTP bridge and a header per route (O) | None (O) |
-| Storage | Backend specific | SQL store and artifacts, 10Gi PVC (O) | Postgres, 20Gi PVC (O) |
-| Auth | Backend specific | None configured | On by default; the collector was rejected until it was turned off (O) |
+| Storage | Backend specific | SQL store and artifact store (S3) (O) | Postgres (O) |
+| Auth | Backend specific | None or SSO or basic Auth is supported | None or SSO or basic Auth is supported |
 | Startup problems | - | Probe timeouts and OOM kills needed chart patches (O) | None |
 
 ### 2. What the trace looks like
