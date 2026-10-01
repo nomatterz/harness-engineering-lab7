@@ -97,7 +97,7 @@ queries run inside the pod.
 | | Bare OTel | MLflow | Phoenix |
 |---|-----------|--------|---------|
 | Evals, datasets and experiments | None | Yes (B) | Yes (B) |
-| Prompt management and playground | None | Prompt registry (B) | Versioned prompts and playground (B) |
+| Prompt management and playground | None | Versioned prompt registry and playground (B) | Versioned prompts and playground (B) |
 | Model registry and model packaging/serving | None | Core of the product (B) | No (B) |
 
 ## Consequences
